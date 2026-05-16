@@ -788,7 +788,6 @@ export default function Home() {
       .client-total-row.final{border-top:2px solid #ea580c;margin-top:8px;padding-top:8px;font-size:18px}
     </style></head><body>`
 
-    html += `<h1>DrywallCalc Pro</h1><p style="color:#666;margin:0">Proposta de Orçamento</p>`
     html += pdfHeader(now)
 
     for (const amb of ambientes) {
