@@ -138,18 +138,6 @@ const S01_ITENS: SeedTemplateItem[] = [
     condicaoAtivacao: '{}',
     ordem: 1,
   },
-  // 2. Montantes duplos (condicional: montantesDuplos && qtdReforco > 0)
-  {
-    materialCodigo: 'M02',
-    tipoCalculo: 'peca_fixa',
-    coeficiente: 1,
-    parametrosJson: '{"porReforco":true,"multiplicarAltura":true,"dividirBarra":true}',
-    fatorPerda: -1,
-    categoriaUso: 'estrutura',
-    obs: 'Montantes duplos',
-    condicaoAtivacao: '{"e":[{"campo":"montantesDuplos","valor":true},{"campo":"qtdReforco","min":1}]}',
-    ordem: 2,
-  },
   // 3. Guias (piso + teto)
   {
     materialCodigo: 'M01',
@@ -212,7 +200,7 @@ const S01_ITENS: SeedTemplateItem[] = [
   },
   // 8. Chapas (2 faces, 1 camada)
   {
-    materialCodigo: '__CHAPA__',
+    materialCodigo: 'C01',
     tipoCalculo: 'area',
     coeficiente: 1,
     parametrosJson: '{"faces":2,"camadas":1,"divisorArea":true}',
@@ -282,18 +270,6 @@ const S01_ITENS: SeedTemplateItem[] = [
     condicaoAtivacao: '{"campo":"arestas","min":0.01}',
     ordem: 12,
   },
-  // 13. Reforço madeira (condicional)
-  {
-    materialCodigo: 'R01',
-    tipoCalculo: 'peca_fixa',
-    coeficiente: 1,
-    parametrosJson: '{"porReforco":true,"valor":1}',
-    fatorPerda: -1,
-    categoriaUso: 'reforco',
-    obs: 'Reforço madeira',
-    condicaoAtivacao: '{"e":[{"campo":"tipoReforco","valor":"madeira"},{"campo":"qtdReforco","min":1}]}',
-    ordem: 13,
-  },
   // 14. Reforço chapa aço (condicional)
   {
     materialCodigo: 'R02',
@@ -338,18 +314,6 @@ const S02_ITENS: SeedTemplateItem[] = [
     obs: 'Montantes — barra 3m',
     condicaoAtivacao: '{}',
     ordem: 1,
-  },
-  // 2. Montantes duplos (condicional)
-  {
-    materialCodigo: 'M02',
-    tipoCalculo: 'peca_fixa',
-    coeficiente: 1,
-    parametrosJson: '{"porReforco":true,"multiplicarAltura":true,"dividirBarra":true}',
-    fatorPerda: -1,
-    categoriaUso: 'estrutura',
-    obs: 'Montantes duplos',
-    condicaoAtivacao: '{"e":[{"campo":"montantesDuplos","valor":true},{"campo":"qtdReforco","min":1}]}',
-    ordem: 2,
   },
   // 3. Guias (piso + teto)
   {
@@ -413,7 +377,7 @@ const S02_ITENS: SeedTemplateItem[] = [
   },
   // 8. Chapas (2 faces, camadas dinâmicas: usarCamadaDupla)
   {
-    materialCodigo: '__CHAPA__',
+    materialCodigo: 'C01',
     tipoCalculo: 'area',
     coeficiente: 1,
     parametrosJson: '{"faces":2,"usarCamadaDupla":true,"divisorArea":true}',
@@ -531,18 +495,6 @@ const S02_ITENS: SeedTemplateItem[] = [
     condicaoAtivacao: '{"e":[{"campo":"tipoReforco","valor":"chapa_aco"},{"campo":"qtdReforco","min":1}]}',
     ordem: 16,
   },
-  // 17. Isolamento
-  {
-    materialCodigo: '__ISOLAMENTO__',
-    tipoCalculo: 'area',
-    coeficiente: 1,
-    parametrosJson: '{"faces":1,"camadas":1,"divisorArea":false}',
-    fatorPerda: -1,
-    categoriaUso: 'isolamento',
-    obs: 'Isolamento térmico/acústico',
-    condicaoAtivacao: '{"campo":"isolamento","valor":true}',
-    ordem: 17,
-  },
 ];
 
 // ════════════════════════════════════════════════════════════
@@ -625,7 +577,7 @@ const S03_ITENS: SeedTemplateItem[] = [
   },
   // 7. Chapas (2 faces, 1 camada)
   {
-    materialCodigo: '__CHAPA__',
+    materialCodigo: 'C01',
     tipoCalculo: 'area',
     coeficiente: 1,
     parametrosJson: '{"faces":2,"camadas":1,"divisorArea":true}',
@@ -766,7 +718,7 @@ const S04_ITENS: SeedTemplateItem[] = [
   },
   // 6. Chapas (1 face, 1 camada)
   {
-    materialCodigo: '__CHAPA__',
+    materialCodigo: 'C01',
     tipoCalculo: 'area',
     coeficiente: 1,
     parametrosJson: '{"faces":1,"camadas":1,"divisorArea":true}',
@@ -847,7 +799,7 @@ const S04_ITENS: SeedTemplateItem[] = [
 const S05_ITENS: SeedTemplateItem[] = [
   // 1. Chapas (1 face, 1 camada)
   {
-    materialCodigo: '__CHAPA__',
+    materialCodigo: 'C01',
     tipoCalculo: 'area',
     coeficiente: 1,
     parametrosJson: '{"faces":1,"camadas":1,"divisorArea":true}',
@@ -950,18 +902,6 @@ const S06_ITENS: SeedTemplateItem[] = [
     condicaoAtivacao: '{"campo":"tipoBordaForro","valor":"tabica"}',
     ordem: 3,
   },
-  // 4. Pendurais/Suportes (1 por pendural)
-  {
-    materialCodigo: 'M11',
-    tipoCalculo: 'proporcao',
-    coeficiente: 1,
-    parametrosJson: '{"formula":"por_pendural","fatorPorUnidade":1,"divisor":1}',
-    fatorPerda: -1,
-    categoriaUso: 'estrutura',
-    obs: 'Pendurais/Suportes nivelador',
-    condicaoAtivacao: '{}',
-    ordem: 4,
-  },
   // 5. Reguladores F530 (1 por pendural)
   {
     materialCodigo: 'M12',
@@ -1024,7 +964,7 @@ const S06_ITENS: SeedTemplateItem[] = [
   },
   // 10. Chapas forro (1 face, 1 camada)
   {
-    materialCodigo: '__CHAPA__',
+    materialCodigo: 'C01',
     tipoCalculo: 'area',
     coeficiente: 1,
     parametrosJson: '{"faces":1,"camadas":1,"divisorArea":true}',
@@ -1177,7 +1117,7 @@ const S07_ITENS: SeedTemplateItem[] = [
   },
   // 6. Chapas forro (1 face)
   {
-    materialCodigo: '__CHAPA__',
+    materialCodigo: 'C01',
     tipoCalculo: 'area',
     coeficiente: 1,
     parametrosJson: '{"faces":1,"camadas":1,"divisorArea":true}',
@@ -1268,18 +1208,6 @@ const S08_ITENS: SeedTemplateItem[] = [
     condicaoAtivacao: '{}',
     ordem: 1,
   },
-  // 2. Montantes duplos (condicional)
-  {
-    materialCodigo: 'M02',
-    tipoCalculo: 'peca_fixa',
-    coeficiente: 1,
-    parametrosJson: '{"porReforco":true,"multiplicarAltura":true,"dividirBarra":true}',
-    fatorPerda: -1,
-    categoriaUso: 'estrutura',
-    obs: 'Montantes duplos',
-    condicaoAtivacao: '{"e":[{"campo":"montantesDuplos","valor":true},{"campo":"qtdReforco","min":1}]}',
-    ordem: 2,
-  },
   // 3. Guias (piso + teto)
   {
     materialCodigo: 'M01',
@@ -1305,18 +1233,6 @@ const S08_ITENS: SeedTemplateItem[] = [
     ordem: 4,
   },
   // 5. Cantoneira abas desiguais — sem arestas (condicional: arestas = 0)
-  // Original: comp * 0.5 / BARRA_M
-  {
-    materialCodigo: 'M07',
-    tipoCalculo: 'perimetro',
-    coeficiente: 1,
-    parametrosJson: '{"base":"comprimento","multiplicador":0.5,"divirBarra":true}',
-    fatorPerda: -1,
-    categoriaUso: 'estrutura',
-    obs: 'Cantoneira abas desiguais — estimativa',
-    condicaoAtivacao: '{"campo":"arestas","max":0}',
-    ordem: 5,
-  },
   // 6. SM (4 por montante)
   {
     materialCodigo: 'P01',
@@ -1331,7 +1247,7 @@ const S08_ITENS: SeedTemplateItem[] = [
   },
   // 7. Chapas (2 faces, 1 camada)
   {
-    materialCodigo: '__CHAPA__',
+    materialCodigo: 'C01',
     tipoCalculo: 'area',
     coeficiente: 1,
     parametrosJson: '{"faces":2,"camadas":1,"divisorArea":true}',
@@ -1366,18 +1282,6 @@ const S08_ITENS: SeedTemplateItem[] = [
     ordem: 9,
   },
   // 10. Cantoneira aresta — sem arestas: comp*2 (condicional)
-  // Original: arestasEst = arestas > 0 ? arestas : comp * 2
-  {
-    materialCodigo: 'M08',
-    tipoCalculo: 'perimetro',
-    coeficiente: 1,
-    parametrosJson: '{"base":"comprimento","multiplicador":2,"divirBarra":true}',
-    fatorPerda: -1,
-    categoriaUso: 'acabamento',
-    obs: 'Cantoneira perfurada — estimativa',
-    condicaoAtivacao: '{"campo":"arestas","max":0}',
-    ordem: 10,
-  },
   // 11. Fita papel (2 faces)
   {
     materialCodigo: 'AC03',
