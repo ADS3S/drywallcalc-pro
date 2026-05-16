@@ -664,9 +664,14 @@ export default function Home() {
     h1{color:#ea580c;font-size:22px;margin-bottom:4px}
     h2{color:#ea580c;font-size:16px;border-bottom:2px solid #ea580c;padding-bottom:4px;margin-top:24px}
     h3{font-size:14px;margin-bottom:8px}
-    table{width:100%;border-collapse:collapse;margin-bottom:16px;font-size:12px}
+    table{width:100%;border-collapse:collapse;margin-bottom:16px;font-size:12px;table-layout:fixed}
     th{background:#f97316;color:white;padding:6px 8px;text-align:left}
-    td{padding:5px 8px;border-bottom:1px solid #e5e7eb}
+    td{padding:5px 8px;border-bottom:1px solid #e5e7eb;vertical-align:top}
+    .col-material{width:44%}
+    .col-qtd{width:12%;text-align:center}
+    .col-perda{width:10%;text-align:center}
+    .col-qtd-perda{width:14%;text-align:center}
+    .col-custo{width:20%;text-align:right}
     tr:nth-child(even){background:#fef3c7}
     .right{text-align:right}
     .total-row{font-weight:bold;background:#fff7ed}
@@ -683,7 +688,7 @@ export default function Home() {
   `
 
   const pdfHeader = (now: string) => {
-    let h = `<h1>DrywallCalc Pro</h1><p style="color:#666;margin:0">Orçamento de Materiais para Drywall</p>`
+    let h = `<h1>DrywallCalc Pro</h1><p style="color:#666;margin:0">Proposta de Orçamento</p>`
     h += `<div class="info-box"><strong>Cliente:</strong> ${cliente.nome}<br>`
     if (cliente.telefone) h += `<strong>Telefone:</strong> ${cliente.telefone}<br>`
     h += `<strong>Data:</strong> ${now}`
@@ -729,11 +734,11 @@ export default function Home() {
       for (const [cat, grupo] of Object.entries(grupos)) {
         const catLabel = CATEGORIAS_LABELS[cat as MaterialCategory] || cat
         html += `<h3><span class="badge badge-${cat}">${catLabel}</span></h3>`
-        html += `<table><thead><tr><th>Material</th><th>Qtd Bruta</th><th>Perda</th><th>Qtd c/ Perda</th><th class="right">Custo</th></tr></thead><tbody>`
+        html += `<table><thead><tr><th class="col-material">Material</th><th class="col-qtd">Qtd Bruta</th><th class="col-perda">Perda</th><th class="col-qtd-perda">Qtd c/ Perda</th><th class="col-custo">Custo</th></tr></thead><tbody>`
         for (const item of grupo.itens) {
-          html += `<tr><td>${item.nome}</td><td>${item.qtdBruta}</td><td>${item.fatorPerda}%</td><td>${item.qtdComPerda}</td><td class="right">${fmtBRL(item.custoProporcional)}</td></tr>`
+          html += `<tr><td class="col-material">${item.nome}</td><td class="col-qtd">${item.qtdBruta}</td><td class="col-perda">${item.fatorPerda}%</td><td class="col-qtd-perda">${item.qtdComPerda}</td><td class="col-custo">${fmtBRL(item.custoProporcional)}</td></tr>`
         }
-        html += `<tr class="total-row"><td colspan="4">Subtotal ${catLabel}</td><td class="right">${fmtBRL(grupo.subtotal)}</td></tr></tbody></table>`
+        html += `<tr class="total-row"><td colspan="4">Subtotal ${catLabel}</td><td class="col-custo">${fmtBRL(grupo.subtotal)}</td></tr></tbody></table>`
       }
 
       if (amb.itensManuais.length > 0) {
@@ -783,7 +788,7 @@ export default function Home() {
       .client-total-row.final{border-top:2px solid #ea580c;margin-top:8px;padding-top:8px;font-size:18px}
     </style></head><body>`
 
-    html += `<h1>DrywallCalc Pro</h1><p style="color:#666;margin:0">Proposta Comercial</p>`
+    html += `<h1>DrywallCalc Pro</h1><p style="color:#666;margin:0">Proposta de Orçamento</p>`
     html += pdfHeader(now)
 
     for (const amb of ambientes) {
@@ -793,17 +798,12 @@ export default function Home() {
       html += `<div class="ambient-block">`
       html += `<div class="ambient-title">${amb.nome} ${tpl ? `— ${tpl.nome}` : ''}</div>`
 
-      // Lista de materiais (apenas nomes, sem quantidades ou valores)
-      const grupos = agruparPorCategoria(r.itens)
-      for (const [cat, grupo] of Object.entries(grupos)) {
-        const catLabel = CATEGORIAS_LABELS[cat as MaterialCategory] || cat
-        html += `<h3><span class="badge badge-${cat}">${catLabel}</span></h3>`
-        html += `<ul class="mat-list">`
-        for (const item of grupo.itens) {
-          html += `<li>${item.nome}</li>`
-        }
-        html += `</ul>`
+      // Lista simples de materiais por ambiente
+      html += `<ul class="mat-list">`
+      for (const item of r.itens) {
+        html += `<li>${item.nome}</li>`
       }
+      html += `</ul>`
 
       html += `</div>`
     }
